@@ -25,7 +25,7 @@ using namespace std ;
 #define uni(a) sort(all(a)) , a.resize(unique(a.begin(),a.end())-a.begin()) 
 
 const int N = 200 + 5 ;
-const int maxn = 5e3 + 5 ;
+const int maxn = 5e4 + 5 ;
 const int LO = 17 ;
 const int base = 311 ;
 const int M = 1e3 + 5 ; 
