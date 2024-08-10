@@ -1,0 +1,75 @@
+/*[продолжатьипродолжать]*/
+/* ---------------------- *
+ *     Code by watbor     *
+ *                        * 
+--------------------------*/
+
+#define tct template<class MITSURII,class CHANN>
+
+#include <bits/stdc++.h>
+using namespace std ; 
+
+#define int long long
+#define ll long long 
+#define fi first
+#define se second
+#define pb push_back
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+#define endl '\n' 
+#define sz(a) (int)a.size()
+#define all(a) a.begin(),a.end()
+#define FOR(i,a,b) for(int i(a) ; i <= b ; i++)
+#define FORD(i,a,b) for(int i(a) ; i >= b ; i--)
+#define FORN(i,a,b) for(int i(a) ; i < b ; i++)
+#define uni(a) sort(all(a)) , a.resize(unique(a.begin(),a.end())-a.begin()) 
+
+const int N = 1e5 + 5 ;
+const int LO = 17 ;
+const int base = 311 ;
+const int M = 1e3 + 5 ; 
+const int oo = 2e9 ; 
+const int mod = 1e9 + 7 ;
+const long long inf = 1e18 ;
+
+const int dx[] = {-1,1,0,0} ;
+const int dy[] = {0,0,-1,1} ; 
+
+tct bool minimize(MITSURII &x,const CHANN &y) {if(x > y) {x = y ; return true ; }else return false ;}
+tct bool maximize(MITSURII &x,const CHANN &y) {if(x < y) {x = y ; return true ; }else return false ;}
+
+int dp[25][(int)(1 << 20) + 2] ;
+bool ok[25][25] ; 
+signed main(void) {
+    #define TASK ""
+    ios_base::sync_with_stdio(0);
+    cin.tie(nullptr);cout.tie(nullptr);
+    if( fopen(TASK".inp","r") ) {
+        freopen(TASK".inp","r",stdin) ; freopen(TASK".out","w",stdout);
+    }
+    int n ;
+    vi a , b ;
+    cin >> n ;
+    a.resize(n + 1,0) ; b.resize(n + 1, 0) ;
+    FOR(i,1,n) cin >> a[i] ; 
+    FOR(i,1,n) cin >> b[i] ; 
+    FOR(i,1,n) FOR(j,1,n) if(a[i] <= b[j]) {
+    	ok[i][j] = 1 ; 
+    }	
+    FOR(i,1,n) if(ok[i][1]) dp[1][(1 << (i-1))] = 1 ; 
+    FOR(i,1,n) {
+    	FOR(mask,0,(1<<n)-1) {
+    		if(__builtin_popcount(mask) >= i) {
+    			FOR(j,0,n-1) {
+    				if(ok[j+1][i]) {
+    					dp[i][mask] = (dp[i][mask] + dp[i-1][mask ^ (1 << j)]) ; 
+    				}
+    			}
+    		}
+    	}
+    }
+    cout << dp[n][(1<<n)-1] ; 
+    cerr << endl << "watborhihi : " << clock() << "ms" << endl;
+    return 0 ;
+}
